@@ -7,7 +7,7 @@ def get_album_transforms(norm_mean, norm_std):
     '''
     get the train and test transform by albumentations
     '''
-    train_transform = A.Compose([]
+    train_transform = A.Compose([
         A.PadIfNeeded(min_height=36, min_width=36, border_mode=4, value=[0, 0, 0], always_apply=True),
         A.RandomResizedCrop(height=32, width=32, always_apply=True),
         A.Flip(0.5),
@@ -15,7 +15,6 @@ def get_album_transforms(norm_mean, norm_std):
                fill_value=0, always_apply=False, p=0.5),
         A.Normalize(mean=norm_mean, std=norm_std ),
         ToTensorV2()
-        
     ])
     test_transform = A.Compose([A.Normalize(mean=norm_mean, std=norm_std ),
                                 ToTensorV2()

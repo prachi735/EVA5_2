@@ -423,6 +423,28 @@ class LRFinder(object):
                 running_loss += loss.item() * len(labels)
 
         return running_loss / len(val_iter.dataset)
+    
+    def get_suggested_lr(self,skip_end=5,skip_start=5):
+        lrs = self.history["lr"]
+        losses = self.history["loss"]
+        if skip_end == 0:
+            lrs = lrs[skip_start:]
+            losses = losses[skip_start:]
+        else:
+            lrs = lrs[skip_start:-skip_end]
+            losses = losses[skip_start:-skip_end]
+
+        min_grad_idx = None
+        try:
+            min_grad_idx = (np.gradient(np.array(losses))).argmin()
+        except ValueError:
+            print(
+                "Failed to compute the gradients, there might not be enough points."
+            )
+        if min_grad_idx is not None:
+            return lrs[min_grad_idx]
+        else:
+            return None
 
     def plot(
         self,

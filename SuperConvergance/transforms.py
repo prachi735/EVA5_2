@@ -7,9 +7,9 @@ def get_album_transforms(norm_mean, norm_std):
     '''
     get the train and test transform by albumentations
     '''
-    train_transform = A.Compose([
-        A.PadIfNeeded(min_height=36, min_width=36, border_mode=4, value=[0, 0, 0], always_apply=True, p=1.0),
-        A.RandomResizedCrop(height=32, width=32, always_apply=True, p=1),
+    train_transform = A.Compose([]
+        A.PadIfNeeded(min_height=36, min_width=36, border_mode=4, value=[0, 0, 0], always_apply=True),
+        A.RandomResizedCrop(height=32, width=32, always_apply=True),
         A.Flip(0.5),
         A.Cutout(num_holes=1, max_h_size=8, max_w_size=8,
                fill_value=0, always_apply=False, p=0.5),

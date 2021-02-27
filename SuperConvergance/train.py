@@ -2,7 +2,7 @@ from typing import Tuple
 from tqdm import tqdm
 
 
-def train(model, device, train_loader, optimizer, loss_fn) -> Tuple[float, float]:
+def train(model, device, train_loader, optimizer, scheduler, loss_fn) -> Tuple[float, float]:
     model.train()
     pbar = tqdm(train_loader)
     correct = 0
@@ -23,6 +23,7 @@ def train(model, device, train_loader, optimizer, loss_fn) -> Tuple[float, float
         # Backpropagation
         loss.backward()
         optimizer.step()
+        scheduler.step()
 
         # Update pbar-tqdm
 
